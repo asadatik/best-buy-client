@@ -4,9 +4,9 @@ import 'aos/dist/aos.css';
 import { FaStar } from "react-icons/fa";
 AOS.init();
 
-const HomeCard = ({ card }) => {
+const HomeCard = ({ product }) => {
 
-    const { name, image, description, price, category, brand, ratings, createdAt, _id } = card;
+    const { name, image, description, price, category,  ratings, createdAt, _id } = product;
     return (
 
         <div data-aos="zoom-in-down "    >

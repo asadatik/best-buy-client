@@ -9,8 +9,8 @@ import Root from './Root/Root';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import SignUp from './pages/Authentication/SignUp';
 import AuthProvider from './pages/Provider/AuthProvider';
-import Home from '../src/pages/Home/Home'
 import Login from './pages/Authentication/Login';
+import Secondhome from './pages/Home/Secondhome';
 
 const router = createBrowserRouter([
   {
@@ -20,9 +20,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
-        loader: () =>
-          fetch(`${import.meta.env.VITE_API_URL}/allPro`)
+        element: <Secondhome></Secondhome>,
+       
       },
 
       {
@@ -33,7 +32,11 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login></Login>
       }, 
-    
+
+      {
+        path: "/second",
+        element: <Secondhome></Secondhome>
+      },
     ]
 
 

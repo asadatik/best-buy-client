@@ -1,163 +1,148 @@
 
-
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link ,useNavigate,useLocation} from "react-router-dom";
+import { useContext, useState } from "react";
+import { MdOutlineError } from "react-icons/md";
 import Swal from 'sweetalert2'
-import { useContext } from "react";
-import { ToastContainer, } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
-import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../Provider/AuthProvider";
-import useAxiosPublic from "../../Hook/AxiosPublic/useAxiosPublic";
-
 const SignUp = () => {
-    const Navigate = useNavigate();
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { Creatuser, updatedUserProfile } = useContext(AuthContext);
-    const axiosPublic = useAxiosPublic();
-    const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-    const Location = useLocation();
-    console.log("Location in the register page", Location);
+    const [Error,setError] = useState('')
+    const [ showPass , SetShowPass       ]     = useState(false)
 
+const{ Creatuser , updatedUserProfile} = useContext(AuthContext);
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        const imageFile = { image: data.photoURL[0] }
-        const resImageUpload = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                'content-type': 'multipart/form-data'
+const Location = useLocation();
+
+console.log("Location in the register page",Location);
+
+const Navigate =  useNavigate(); 
+
+const HandleLogin = (e)=>{
+    e.preventDefault()
+    const from = new FormData(e.currentTarget);
+           console.log(from)
+      const Name =  (from.get('name'));
+      const Photo =  (from.get('photo'));
+      const email             =  (from.get('email'));
+      const  password =  (from.get('password'))
+      console.log( typeof password); 
+         //  reset error 
+         setError('')
+          
+      if(password.length<6){
+        setError('Password should be at least 6 characters.')
+                return;
             }
+          else if ( !/[A-Z]/.test(password) ){
+            toast.error("Password should be an Uppercase Letter!")
+           return;
+          }
+          else if(  !/[a-z]/.test(password ) ){
+            toast.error("Password should be an Lowercase Letter!!")
+            return 
+          }
+   
+     
+
+    // create User ///
+           Creatuser(email,password,Name,Photo) 
+           
+       .then( Result=>  {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Create User Successfully",
+          showConfirmButton: false,
+          timer: 2500
         });
-
-        const uploadedImage = resImageUpload.data.data.display_url;
-
-        //
-
-        try {
-            const result = await Creatuser(data.email, data.password);
-            const loggedUser = result.user;
-            console.log(loggedUser);
-
-            await updatedUserProfile(data.name, uploadedImage);
-
-            // create user entry in the database
-            const userInfo = {
-                name: data.name,
-                email: data.email,
-              
-            };
-
-            const res = await axiosPublic.post('/users', userInfo);
-
-            if (res.data.insertedId) {
-                console.log('user added to the database');
-                reset();
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'User created successfully.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                Navigate('/');
-            }
-        }
-        catch (error) {
-            //   console.error(error);
-            //   setError(error.message)
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something Wrong! please try again",
-            })
-        }
+        updatedUserProfile(Name,Photo)
+        Navigate(  Location?.state ? Location.state :'/' ) 
+          console.log(Result.user) 
+       }     )
 
 
-    };
+       .catch((error)=>{
+           setError(error.message)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+           text:"Something Wrong! please try again" ,
+       })
+}  
+
+) }
+
+
     return (
-        <div className="mt-5    hero  " >
+          <div className="    hero  " style={{backgroundImage: 'url(https://i.ibb.co/7Nntrwf/user-typing-login-and-password-cyber-security-concept-1.jpg)'}}  >
+          {/* <Helmet>  <title> Register Page  </title>      </Helmet> */}
+             
+             
+              <div  className=" my-20  " >
 
 
-            {/* <Helmet>
-                <title>Sign Up || ShopSort</title>
-            </Helmet> */}
-            <div className=" my-10  lg:flex  " >
+             
+
+               <div className="mx-auto rounded-r-xl  px-6 py-4    md:px-8 mt-8  bg-base-200  ">
+       <h1 className="lg:text-4xl font-bold text-center  border-b-4 border-y-indigo-600 pb-4 "  >  Create A New  Account</h1> 
+            <form onSubmit={HandleLogin} className="card-body">
+            <div className="form-control">
+        <label className="label">
+        <span className="label-text font-medium "> Your  Name</span>
+      </label>
+      <input type="text"  placeholder="Your Name"  name="name" className="input input-bordered" required />
+    </div>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text font-medium "> Your  photo Url  </span>
+      </label>
+      <input type="text" placeholder="photo url"  name="photo" className="input input-bordered" required />
+    </div>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text font-medium ">   Email</span>
+      </label>
+      <input type="email" placeholder="Enter Your email"  name="email" className="input input-bordered" required />
+    </div>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text font-medium ">Password</span>
+      </label>
+          
+        <div className="relative  "  > 
+          <input 
+          type= {showPass ? 'text' :   "password" }  
+            placeholder="password" 
+             name="password" 
+              className="input w-full input-bordered" required/>
+           <span className="absolute top-4 right-4  " onClick={ () =>SetShowPass (!showPass ) } > 
+            { showPass ?<FaEyeSlash className="w-14" />  :       <FaEye className="w-12" />    }
+           </span>
+          </div>
+           
+      <label className="label">
+        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+      </label>
+     
+    </div>
+    {  Error && <p className=" text-xl lg:ml-10 flex gap-1 text-red-600 " ><MdOutlineError  className="text-2xl"/>{Error}</p>     }
+    <div className="form-control mt-6">
+      <button className="btn text-2xl font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-500">Register</button>       
+    </div>
+  </form>
+      <h1 className="text-center text-xl  "  >Already have an Account ? < Link to='/login' className=" font-bold text-green-700 text-2xl  " >Login</Link></h1>
+               </div>
 
 
-
-                <div className="mx-auto rounded-r-xl  px-2 py-2  lg:w-[700px]  md:px-8 mt-8  bg-base-200  ">
-                    <h1 className="lg:text-4xl font-bold text-center  border-b-4 border-y-indigo-600 pb-1 "  >  Create A  Account</h1>
-
-                    <form onSubmit={handleSubmit(onSubmit)} className="card-body   ">
-
-                        {/* name */}
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                            </label>
-                            <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
-                            {errors.name && <span className="text-red-600">Name is required</span>}
-                        </div>
-                        {/* PHOTO UPLOAD */}
-                        <div className="form-control w-full ">
-                            <label className="label">
-                                <span className="label-text">Upload Your Photo</span>
-                            </label>
-                            <input {...register("photoURL", { required: true })} type="file" className="file-input w-full " />
-                            {errors.photoURL && <span className="text-red-600">Upload your Photo Url</span>}
-                        </div>
-                        {/*  */}
-
-                        {/* role */}
-                        {/* <div className="form-control w-full">
-                            <label className="label">
-                                <span className="label-text">Role</span>
-                            </label>
-                            <select defaultValue=""   {...register('role', { required: true })}
-                                className="select select-bordered w-full">
-                                <option disabled value="">Select a category</option>
-                                <option value="user">user</option>
-                                <option value="seller">seller</option>
-                            </select>
-                            {errors.select && <span className="text-red-600" > Select Your role </span>}
-                        </div> */}
-                        {/* email */}
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input type="email"  {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
-                            {errors.email && <span className="text-red-600">Please Enter your Email Address</span>}
-                        </div>
-                        {/* password */}
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Password</span>
-                            </label>
-                            <input type="password"  {...register("password", {
-                                required: true,
-                                minLength: 6,
-                                maxLength: 20,
-                                // pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                            })} placeholder="password" className="input input-bordered" />
-                            {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
-                            {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
-
-                        </div>
-                        <div className="form-control ">
-                            <button className="btn text-2xl mt-2 font-semibold text-white bg-gradient-to-r from-sky-500 to-indigo-500">Register</button>
-                        </div>
-                    </form>
-                    <h1 className="text-center text-xl  "  >Already have an Account ? < Link to='/login' className=" font-bold text-green-700 text-2xl  " >Login</Link></h1>
-                </div>
-
-
-            </div>
-
-            <ToastContainer />
-        </div>
+              </div>
+   
+           <ToastContainer />
+           </div>
     );
 };
 
