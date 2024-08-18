@@ -16,10 +16,6 @@ const Navbar = () => {
          .catch()
  
      }
-          
-
-
-
     return (
         <div className="navbar bg-indigo-600 lg:px-40  ">
         <div className="navbar-start   ">
@@ -33,11 +29,15 @@ const Navbar = () => {
             </ul>
           </div>
           {/* <a className="  lg:text-4xl font-extrabold  text-orange-200   ">NestQuestHub</a> */}
-            <a>
-              <p className="text-3xl   "  ><span className="font-extrabold text-black  ">Shop</span><span className="">Sort</span></p>
+            <a className="flex gap-1"  >
+                <Link to='/' > 
+              <img className="w-10 h-10  rounded-full"  src="https://i.ibb.co/0X1wwG7/pexels-knownasovan-62689.jpg" alt="" />
+                
+                 </Link>
+               <p className="text-3xl   "  ><span className="font-extrabold text-black  ">Shop</span><span className="">Sort</span></p>
             </a>
         </div>
-        <div className="navbar-end hidden lg:flex">
+        <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
            <a className="text-xl text-white " >  <NavLink   to="/">  Home </NavLink></a>
           
@@ -47,7 +47,7 @@ const Navbar = () => {
        
                  {
                     user? <div className="tooltip tooltip-bottom " data-tip={user.displayName?user.displayName:'user name not found'}>
-                   <button>    { user.photoURL?<img className="w-12  rounded-full  " src={user.photoURL} 
+                   <button>    { user.photoURL?<img className=" w-10  rounded-full  " src={user.photoURL} 
                 alt="" /> :  <img className="w-12 rounded-full "  src={User}  />  }   </button>
                        </div> 
                      :

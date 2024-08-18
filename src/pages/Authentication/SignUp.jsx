@@ -8,7 +8,7 @@ import { FaEyeSlash } from "react-icons/fa";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../Provider/AuthProvider";
 const SignUp = () => {
     const [Error,setError] = useState('')

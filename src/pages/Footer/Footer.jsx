@@ -10,7 +10,7 @@ const Footer = () => {
        <footer className="footer  bg-indigo-600   mt-14 p-4  lg:p-10  text-base-content">
   <nav>
      <div className="flex gap-1 " >
-     <FcHome className="text-3xl" />
+    <img className="w-8 h-8 rounded-full" src="https://i.ibb.co/0X1wwG7/pexels-knownasovan-62689.jpg" alt="" />
      <h6 className="footer-title text-2xl font-bold  text-orange-400 ">ShopSort</h6> 
         
      </div>
@@ -26,13 +26,7 @@ const Footer = () => {
     <a className="link link-hover">Blogs</a>
     <a className="link link-hover">Press kit</a>
   </nav> 
-  {/* <nav   className="text-white"  >
-    <h6 className="footer-title  text-xl   ">The Highlights</h6> 
-    <a className="link link-hover">Pc</a>
-    <a className="link link-hover">Laptop</a>
-    <a className="link link-hover">Monitor</a>
-    <a className="link link-hover">Camera</a>
-  </nav> */}
+  
 </footer> 
 <footer className="footer  px-10 py-4 border  bg-indigo-500 text-base-content border-base-300">
   <aside className="items-center grid-flow-col">
