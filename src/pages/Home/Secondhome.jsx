@@ -5,7 +5,6 @@ import HomeCard from "./HomeCard";
 
 
 const Secondhome = () => {
-  // const { user, signOutUser, setUser } = useContext(AuthContext);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [brands, setBrands] = useState([]);
@@ -14,13 +13,13 @@ const Secondhome = () => {
   const [price, setPrice] = useState([]);
   const [priceSelected, setPriceSelected] = useState([]);
   const [category, setCategory] = useState([]);
-  const [gadgets, setGadgets] = useState([]);
+  const [products, setproducts] = useState([]);
   const [sortPrice, setSortPrice] = useState([]);
   const [dateSort, setDateSort] = useState(false);
   const [totalClass, setTotalClass] = useState(0);
 
   const pages = [...Array(Math.ceil(parseInt(totalClass) / 6)).keys()];
- console.log(gadgets)
+ console.log(products)
   const testData = {
     search,
     brand,
@@ -31,58 +30,7 @@ const Secondhome = () => {
     pages,
   };
 
-  // const links = (
-  //   <>
-  //     <li>
-  //       <Link to="/" className="md:hidden">
-  //         <div>Gadget Galaxy</div>
-  //       </Link>
-  //     </li>
-  //     <li>
-  //       <NavLink
-  //         className={({ isActive }) =>
-  //           `block rounded-md p-2 ${
-  //             isActive
-  //               ? "bg-blue-600 text-white"
-  //               : "hover:bg-blue-400 hover:text-white"
-  //           }`
-  //         }
-  //         to="/"
-  //       >
-  //         Home
-  //       </NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink
-  //         className={({ isActive }) =>
-  //           `block rounded-md p-2 ${
-  //             isActive
-  //               ? "bg-blue-600 text-white"
-  //               : "hover:bg-blue-400 hover:text-white"
-  //           }`
-  //         }
-  //         to="/aboutUs"
-  //       >
-  //         About Us
-  //       </NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink
-  //         className={({ isActive }) =>
-  //           `block rounded-md p-2 ${
-  //             isActive
-  //               ? "bg-blue-600 text-white"
-  //               : "hover:bg-blue-400 hover:text-white"
-  //           }`
-  //         }
-  //         to="/contactUs"
-  //       >
-  //         Contact Us
-  //       </NavLink>
-  //     </li>
-  //   </>
-  // );
-
+  
   const handleSearch = (e) => {
     e.preventDefault();
     const search = e.target.search.value;
@@ -96,17 +44,11 @@ const Secondhome = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        setGadgets(data?.result);
+        setproducts(data?.result);
         setTotalClass(data?.totalClasses);
       });
   }, [
-    search,
-    brand,
-    category,
-    priceSelected,
-    sortPrice,
-    dateSort,
-    currentPage,
+    search, brand,category,priceSelected,sortPrice,dateSort,currentPage,
   ]);
     
   // Getting Brands Name
@@ -139,14 +81,7 @@ const Secondhome = () => {
       });
   }, []);
 
-  // const signOut = () => {
-  //   signOutUser()
-  //     .then(() => {
-  //       setUser(null);
-  //     })
-  //     .catch(() => {});
-  // };
-
+ 
   return (
     <div className="mb-40">
       <div className="z-100  container sticky top-0 mx-auto mb-10">
@@ -158,7 +93,7 @@ const Secondhome = () => {
 
           <form
             onSubmit={handleSearch}
-            className="my-3 flex items-center justify-center"
+            className="my-3  flex  items-center justify-center"
           >
             <label className="input input-bordered flex w-full items-center gap-2">
               <input
@@ -169,7 +104,7 @@ const Secondhome = () => {
               />
               <button
                 type="submit"
-                className="rounded-full bg-sky-200 px-3 py-2"
+                className="rounded-full text-black bg-cyan-400 px-3 py-2"
               >
                 Search
               </button>
@@ -181,7 +116,7 @@ const Secondhome = () => {
             <div className="drawer-content">
               <label
                 htmlFor="my-drawer-4"
-                className="btn drawer-button whitespace-nowrap rounded bg-blue-500 px-1 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-blue-600 focus:bg-blue-700 md:px-5"
+                className="btn drawer-button whitespace-nowrap rounded-full bg-lime-300 px-1 text-sm font-medium tracking-wide text-black transition duration-300 hover:bg-blue-600 focus:bg-blue-700 md:px-5"
               >
                 <span className="flex items-center justify-center gap-1">
                   Filter <MdFilterAlt />
@@ -365,8 +300,8 @@ const Secondhome = () => {
       <div className="container mx-auto">
         {/* Card */}
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {gadgets.length > 0 ? (
-            gadgets.map((gadget) => (
+          {products.length > 0 ? (
+            products.map((gadget) => (
               <HomeCard key={gadget._id} product={gadget}></HomeCard>
             ))
           ) : (
@@ -422,7 +357,6 @@ const Secondhome = () => {
             </li>
           </ul>
         </div>
-        {/* End Of Pagination */}
       </div>
     </div>
    

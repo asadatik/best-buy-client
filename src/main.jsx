@@ -10,8 +10,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import SignUp from './pages/Authentication/SignUp';
 import AuthProvider from './pages/Provider/AuthProvider';
 import Login from './pages/Authentication/Login';
-import Secondhome from './pages/Home/Secondhome';
-
+import Home from './pages/Home/Home';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,10 +19,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Secondhome></Secondhome>,
+        element:<Home></Home> ,
        
       },
-
+    
+       
+    
       {
         path: "/joinUs",
         element: <SignUp></SignUp>
@@ -33,10 +34,7 @@ const router = createBrowserRouter([
         element: <Login></Login>
       }, 
 
-      {
-        path: "/second",
-        element: <Secondhome></Secondhome>
-      },
+     
     ]
 
 
