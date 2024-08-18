@@ -3,9 +3,9 @@ import {  Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { FcGoogle } from 'react-icons/fc';
-import { Helmet } from 'react-helmet-async';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAxiosPublic from '../../Hook/AxiosPublic/useAxiosPublic';
+import { Helmet } from 'react-helmet-async';
 
 
 
@@ -83,11 +83,13 @@ const Login = () => {
 
 
         }
+ 
+      
           
     return (
+    
         <div className="flex items-center  lg:min-h-screen  rounded-b-3xl  "  > 
-           
-           
+                  <Helmet><title>login page</title></Helmet>
             <div className="lg:flex justify-center gap-10   ">
                       <div className='lg:w-2/5'>
                     <img src={`https://i.ibb.co/YpgX7Xt/log-concept-landing-page-52683-22136-1.jpg`} alt="" />
@@ -159,7 +161,9 @@ const Login = () => {
 
                  </div>           
             </div>
+           
         </div>
+      
     );
 };
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaSearch, FaFilter } from 'react-icons/fa';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 
 const categories = ['Laptop Accessories', 'Mobile', 'Mobile Accessories', 'Laptop'];
 const brands = ['Acer', 'Samsung', 'Asus', 'Apple','Dell','Huawei','Anker'];
@@ -96,7 +96,7 @@ const Products = () => {
     };
 
     return (
-        <HelmetProvider>
+        
             <div className="min-h-screen flex font-custom">
                 {/* Sidebar for Larger Devices */}
                 <aside className="bg-primary text-white p-6 w-1/5 hidden md:block">
@@ -313,7 +313,7 @@ const Products = () => {
                     )}
                 </main>
             </div>
-        </HelmetProvider>
+       
     );
 };
 
